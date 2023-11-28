@@ -5,9 +5,9 @@ import io.netty.channel.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
-import java.util.Locale;
+import io.netty.channel.ChannelHandler.Sharable;
 
-@ChannelHandler.Sharable
+@Sharable
 public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
 
