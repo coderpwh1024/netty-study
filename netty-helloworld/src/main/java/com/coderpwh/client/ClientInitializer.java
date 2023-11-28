@@ -11,24 +11,22 @@ import io.netty.handler.codec.string.StringEncoder;
 public class ClientInitializer extends ChannelInitializer<SocketChannel> {
 
     private static final StringDecoder DECODER = new StringDecoder();
-
     private static final StringEncoder ENCODER = new StringEncoder();
 
     private static final ClientHandler CLIENT_HANDLER = new ClientHandler();
 
 
     /***
-     * 初始化渠道
-     * @param socketChannel
-     * @throws Exception
+     * 初始化通道
+     * @param ch
      */
     @Override
-    protected void initChannel(SocketChannel socketChannel) throws Exception {
-
-        ChannelPipeline pipeline = socketChannel.pipeline();
+    public void initChannel(SocketChannel ch) {
+        ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
         pipeline.addLast(DECODER);
         pipeline.addLast(ENCODER);
+
         pipeline.addLast(CLIENT_HANDLER);
     }
 
