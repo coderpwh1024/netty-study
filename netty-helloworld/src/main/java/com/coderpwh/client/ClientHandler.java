@@ -19,5 +19,4 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
         ctx.close();
     }
 
-
 }

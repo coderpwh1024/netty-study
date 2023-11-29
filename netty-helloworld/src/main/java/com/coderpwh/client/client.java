@@ -8,13 +8,12 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 
 public class client {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         EventLoopGroup group = new NioEventLoopGroup();
         try {
@@ -22,12 +21,12 @@ public class client {
             b.group(group)
                     .channel(NioSocketChannel.class)
                     .handler(new ClientInitializer());
-            Channel ch = b.connect("127.0.0.1",8900).sync().channel();
+            Channel ch = b.connect("127.0.0.1", 8888).sync().channel();
 
 
             ChannelFuture lastWriteFuture = null;
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            for (;;) {
+            for (; ; ) {
                 String line = in.readLine();
                 if (line == null) {
                     break;
@@ -48,14 +47,8 @@ public class client {
             if (lastWriteFuture != null) {
                 lastWriteFuture.sync();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } finally {
             group.shutdownGracefully();
         }
-
     }
-
 }

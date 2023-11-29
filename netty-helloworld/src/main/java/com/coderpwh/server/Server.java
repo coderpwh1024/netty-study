@@ -21,7 +21,7 @@ public class Server {
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ServerInitializer());
 
-            ChannelFuture future = b.bind(8900);
+            ChannelFuture future = b.bind(8888);
             future.channel().closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();
