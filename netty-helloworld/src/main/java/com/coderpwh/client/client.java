@@ -22,7 +22,7 @@ public class client {
             b.group(group)
                     .channel(NioSocketChannel.class)
                     .handler(new ClientInitializer());
-            Channel ch = b.connect("127.0.0.1",8888).sync().channel();
+            Channel ch = b.connect("127.0.0.1",8900).sync().channel();
 
 
             ChannelFuture lastWriteFuture = null;
