@@ -4,27 +4,23 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.sctp.nio.NioSctpServerChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
 public class Server {
 
-    public static void main(String[] args) {
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
+    public static void main(String[] args) throws Exception  {
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
-
         try {
             ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workerGroup)
-                    .channel(NioSctpServerChannel.class)
+            b.group(bossGroup,workerGroup)
+                    .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ServerInitializer());
-
-            ChannelFuture future = b.bind(8888);
-            future.channel().closeFuture().sync();
-        } catch (Exception e) {
-            e.printStackTrace();
+            ChannelFuture f = b.bind(8888);
+            f.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
