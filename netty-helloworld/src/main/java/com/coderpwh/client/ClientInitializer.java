@@ -16,6 +16,10 @@ public class ClientInitializer  extends ChannelInitializer<SocketChannel>  {
     private static final ClientHandler CLIENT_HANDLER = new ClientHandler();
 
 
+    /***
+     * 初始化通道
+     * @param ch
+     */
     @Override
     public void initChannel(SocketChannel ch) {
         ChannelPipeline pipeline = ch.pipeline();
