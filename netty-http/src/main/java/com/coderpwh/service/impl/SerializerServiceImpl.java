@@ -1,6 +1,7 @@
-package com.coderpwh.service;
+package com.coderpwh.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.coderpwh.service.SerializerService;
 
 public class SerializerServiceImpl implements SerializerService {
 
