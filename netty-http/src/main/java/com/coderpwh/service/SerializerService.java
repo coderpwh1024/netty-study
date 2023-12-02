@@ -1,6 +1,6 @@
 package com.coderpwh.service;
 
-public interface Serializer {
+public interface SerializerService {
 
 
     /***
