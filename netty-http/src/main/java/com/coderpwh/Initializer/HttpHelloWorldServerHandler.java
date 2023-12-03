@@ -2,7 +2,11 @@ package com.coderpwh.Initializer;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.coderpwh.entity.User;
+import com.coderpwh.service.impl.SerializerServiceImpl;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
@@ -11,11 +15,12 @@ import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.codec.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.print.DocFlavor;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
+import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 
 public class HttpHelloWorldServerHandler extends SimpleChannelInboundHandler<HttpObject> {
 
@@ -74,9 +79,24 @@ public class HttpHelloWorldServerHandler extends SimpleChannelInboundHandler<Htt
             } else if (method.equals(HttpMethod.POST)) {
 
                 fullHttpRequest = (FullHttpRequest) msg;
-
+                dealWithContentType();
+                user.setMethod("post");
             }
 
+            SerializerServiceImpl jsonSerializer = new SerializerServiceImpl();
+            byte[] content = jsonSerializer.serialize(user);
+
+            FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(content));
+            response.headers().set(CONTENT_TYPE, "text/plain");
+            response.headers().setInt(CONTENT_LENGTH, response.content().readableBytes());
+
+            boolean keepAlive = HttpUtil.isKeepAlive(request);
+            if (!keepAlive) {
+                ctx.write(response).addListener(ChannelFutureListener.CLOSE);
+            } else {
+                response.headers().set(CONNECTION, KEEP_ALIVE);
+                ctx.write(response);
+            }
 
         }
 
