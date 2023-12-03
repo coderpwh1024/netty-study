@@ -84,6 +84,19 @@ public class HttpHelloWorldServerHandler extends SimpleChannelInboundHandler<Htt
     }
 
 
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        cause.printStackTrace();
+        ctx.close();
+    }
+
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) {
+        ctx.close();
+    }
+
+
     /***
      * 处理常用的Content-type
      */
