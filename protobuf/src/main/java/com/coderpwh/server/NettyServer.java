@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Service("nettyServer")
@@ -42,6 +43,7 @@ public class NettyServer {
     private EventLoopGroup workerGroup;
 
 
+    @PostConstruct
     public void init() throws InterruptedException {
         log.info("Setting resource leak detector level to {}", leakDatectorLevel);
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.valueOf(leakDatectorLevel.toUpperCase()));
