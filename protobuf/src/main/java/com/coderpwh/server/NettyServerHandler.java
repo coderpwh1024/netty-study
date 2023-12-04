@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
+import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -62,6 +63,33 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         } else {
             super.userEventTriggered(context, obj);
         }
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext context, Object msg) {
+        log.info("第" + count.get() + "次" + "，服务端接受消息:{}", msg);
+        try {
+            if (msg instanceof UserMsg.User) {
+                UserMsg.User user = (UserMsg.User) msg;
+                if (user.getState() == 1) {
+                    log.info("客户端业务处理成功");
+                } else if (user.getState() == 2) {
+                    log.info("接受到客户端的发送的心跳！");
+                } else {
+                    log.info("未知数据!");
+                }
+            } else {
+                log.info("未知数据!,数据为:{}", msg);
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ;
+        } finally {
+            ReferenceCountUtil.release(msg);
+        }
+        count.getAndIncrement();
+
     }
 
 
