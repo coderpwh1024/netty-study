@@ -1,8 +1,14 @@
 package com.coderpwh.server;
 
 
+import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.ResourceLeakDetector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,6 +40,27 @@ public class NettyServer {
     private EventLoopGroup bossGroup;
 
     private EventLoopGroup workerGroup;
+
+
+    public void init() throws InterruptedException {
+        log.info("Setting resource leak detector level to {}", leakDatectorLevel);
+        ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.valueOf(leakDatectorLevel.toUpperCase()));
+
+        log.info("Starting Server");
+
+        bossGroup = new NioEventLoopGroup(bossGroupThreadCount);
+        workerGroup = new NioEventLoopGroup(workerGroupThreadCount);
+
+        ServerBootstrap bootstrap = new ServerBootstrap();
+        bootstrap.group(bossGroup, workerGroup)
+                .channel(NioServerSocketChannel.class)
+                .handler(new LoggingHandler(LogLevel.INFO))
+                .childHandler(new NettyServerInitializer());
+
+        channelFuture = bootstrap.bind(port).sync();
+
+        log.info("Server started");
+    }
 
 
     @PreDestroy
