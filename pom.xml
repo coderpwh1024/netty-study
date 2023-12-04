@@ -12,6 +12,7 @@
     <modules>
         <module>netty-helloworld</module>
         <module>netty-http</module>
+        <module>protobuf</module>
     </modules>
 
 
