@@ -25,16 +25,21 @@ public class NettyClientInitializer extends ChannelInitializer<SocketChannel> {
 
         ChannelPipeline pipeline = socketChannel.pipeline();
 
+        /**
+         * 解码与编码
+         */
         pipeline.addLast(new IdleStateHandler(0, 4, 0, TimeUnit.SECONDS));
 
+        /**
+         * 传输协议
+         */
         pipeline.addLast(new ProtobufVarint32FrameDecoder());
         pipeline.addLast(new ProtobufDecoder(UserMsg.User.getDefaultInstance()));
         pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
         pipeline.addLast(new ProtobufEncoder());
 
-        // TODO List 待实现
 
-//        pipeline.addLast("")
+        pipeline.addLast("nettyClientHandler", new NettyClientHandler());
 
 
     }
