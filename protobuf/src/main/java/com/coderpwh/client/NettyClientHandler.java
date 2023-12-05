@@ -8,6 +8,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.EventLoop;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
+import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -80,6 +81,33 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 
     }
 
+
+    /***
+     * 客户端业务逻辑处理
+     * @param context
+     * @param obj
+     */
+    @Override
+    public void channelRead(ChannelHandlerContext context, Object obj) {
+
+        if (!(obj instanceof UserMsg.User)) {
+            log.info("未知数据,数据为:{}", obj);
+            return;
+        }
+
+        try {
+            UserMsg.User userMsg = (UserMsg.User) obj;
+            log.info("客户端接受到的用户信息。编号:{},姓名:{},年龄:{}", userMsg.getId(), userMsg.getName(), userMsg.getAge());
+
+            UserMsg.User.Builder userState = UserMsg.User.newBuilder().setState(1);
+            context.writeAndFlush(userState);
+            log.info("成功发送给客户端");
+        } catch (Exception e) {
+            log.error("异常信息为:{}", e.getMessage());
+        } finally {
+            ReferenceCountUtil.release(obj);
+        }
+    }
 
 
 }
