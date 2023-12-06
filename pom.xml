@@ -13,6 +13,7 @@
         <module>netty-helloworld</module>
         <module>netty-http</module>
         <module>protobuf</module>
+        <module>netty-mysql</module>
     </modules>
 
 
