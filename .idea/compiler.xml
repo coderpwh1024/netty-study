@@ -6,9 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="protobuf" />
+        <module name="netty-mysql" />
         <module name="netty-helloworld" />
         <module name="netty-http" />
-        <module name="protobuf" />
       </profile>
     </annotationProcessing>
   </component>
