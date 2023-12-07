@@ -1,0 +1,11 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.coderpwh.netty.NettServer",
+      "name": "netty",
+      "type": "com.coderpwh.netty.NettServer"
+    }
+  ],
+  "properties": []
+}
