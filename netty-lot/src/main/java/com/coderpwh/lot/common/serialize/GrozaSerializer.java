@@ -1,5 +1,6 @@
 package com.coderpwh.lot.common.serialize;
 
+import com.coderpwh.lot.common.session.SessionStore;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -19,6 +20,6 @@ public class GrozaSerializer implements RedisSerializer<Object> {
     public Object deserialize(byte[] bytes) throws SerializationException {
         String s = new String(bytes);
         Gson gson = new Gson();
-        return null;
+        return gson.fromJson(s, SessionStore.class);
     }
 }
