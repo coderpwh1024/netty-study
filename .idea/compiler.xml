@@ -10,6 +10,7 @@
         <module name="netty-mysql" />
         <module name="netty-helloworld" />
         <module name="netty-http" />
+        <module name="netty-lot" />
       </profile>
     </annotationProcessing>
   </component>
