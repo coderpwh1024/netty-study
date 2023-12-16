@@ -17,12 +17,12 @@ public class RedisCacheAutoConfiguration {
 
 
     @Bean
-    public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
+    public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Serializable> template = new RedisTemplate<>();
         template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        template.setConnectionFactory(lettuceConnectionFactory);
-        return template;¬
+        template.setConnectionFactory(redisConnectionFactory);
+        return template;
     }
 
 
