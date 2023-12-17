@@ -16,6 +16,11 @@ import java.io.Serializable;
 public class RedisCacheAutoConfiguration {
 
 
+    /***
+     * redis设置
+     * @param redisConnectionFactory
+     * @return
+     */
     @Bean
     public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Serializable> template = new RedisTemplate<>();
