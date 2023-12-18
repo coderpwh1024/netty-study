@@ -23,16 +23,17 @@ public class GrozaSessionStoreServiceImpl implements GrozaSessionStoreService {
 
     @Override
     public SessionStore get(String clientId) {
-        return null;
+        return sessionCache.get(clientId);
     }
 
     @Override
     public boolean containKey(String clientId) {
-        return false;
+        return sessionCache.containsKey(clientId);
     }
 
     @Override
     public void remove(String clientId) {
+        sessionCache.remove(clientId);
 
     }
 }
