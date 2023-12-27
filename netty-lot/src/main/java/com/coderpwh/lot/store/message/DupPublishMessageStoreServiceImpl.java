@@ -62,7 +62,7 @@ public class DupPublishMessageStoreServiceImpl implements GrozaDupPublishMessage
 
 
     /***
-     * 删除
+     * 删除1
      * @param clientId
      */
     @Override
