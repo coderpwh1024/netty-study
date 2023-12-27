@@ -49,14 +49,25 @@ public class DupPublishMessageStoreServiceImpl implements GrozaDupPublishMessage
         return new ArrayList<>();
     }
 
+
+    /***
+     * 删除
+     * @param clientId
+     * @param messageId
+     */
     @Override
     public void remove(String clientId, int messageId) {
-
+        grozaDupPublishMessageCache.remove(clientId, messageId);
     }
 
+
+    /***
+     * 删除
+     * @param clientId
+     */
     @Override
     public void removeByClient(String clientId) {
-
+        grozaDupPublishMessageCache.remove(clientId);
     }
 
 
