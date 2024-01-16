@@ -2,6 +2,9 @@ package com.coderpwh.lot.internal;
 
 import java.io.Serializable;
 
+/***
+ *
+ */
 public class InternalMessage implements Serializable {
 
     private String clientId;
