@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /***
  *
+ * @author coderpwh
  */
 public class InternalMessage implements Serializable {
 
