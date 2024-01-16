@@ -23,6 +23,15 @@ public class Connect {
 
     private GrozaSubscribeStoreService grozaSubscribeStoreService;
 
+
+    /***
+     * 构造
+     * @param grozaAuthService
+     * @param grozaSessionStoreService
+     * @param grozaDupPublishMessageStoreService
+     * @param grozaDupPubRelMessageStoreService
+     * @param grozaSubscribeStoreService
+     */
     public Connect(GrozaAuthService grozaAuthService,
                    GrozaSessionStoreService grozaSessionStoreService,
                    GrozaDupPublishMessageStoreService grozaDupPublishMessageStoreService,
