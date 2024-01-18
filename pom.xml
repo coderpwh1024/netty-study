@@ -15,6 +15,7 @@
         <module>protobuf</module>
         <module>netty-mysql</module>
         <module>netty-lot</module>
+        <module>netty-rpc</module>
     </modules>
 
 
